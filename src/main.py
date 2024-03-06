@@ -9,7 +9,7 @@ from skimage.filters import threshold_local
 from PIL import Image
 
 
-file_name = "./src/images/1.jpg"
+file_name = "./src/images/2.jpg"
 img = Image.open(file_name)
 img.thumbnail((600, 600), Image.LANCZOS)
 
@@ -123,6 +123,22 @@ def wrap_perspective(img, rect):
     return cv2.warpPerspective(img, M, (maxWidth, maxHeight))
 
 
+def check_receipt_angle(text):
+    return 'Արարատ Սուպերմարկետ' in text.split('\n')
+
+
+def rotate_image_90(image_path):
+    # Read the image
+    image = cv2.imread(image_path)
+
+    # Rotate the image by 90 degrees counterclockwise
+    rotated_image = cv2.transpose(image)
+    rotated_image = cv2.flip(rotated_image, 0)
+
+    # Save the rotated image, replacing the original file
+    cv2.imwrite(image_path, rotated_image)
+
+
 scanned = wrap_perspective(original.copy(), contour_to_rect(receipt_contour))
 plt.figure(figsize=(16, 10))
 plt.imshow(scanned)
@@ -137,7 +153,15 @@ output.save(RESULT_IMAGE_PATH)
 
 img = Image.open(RESULT_IMAGE_PATH)
 
-text = pytesseract.image_to_string(img, lang="script/Armenian+eng+rus")
+text = pytesseract.image_to_string(img, lang="Armenian+rus")
+
+for i in range(3):
+    if check_receipt_angle(text):
+        print(text)
+        break
+    rotate_image_90(RESULT_IMAGE_PATH)
+    img = Image.open(RESULT_IMAGE_PATH)
+    text = pytesseract.image_to_string(img, lang="Armenian+rus")
 
 def filter(info) -> list:
     result = []
@@ -167,6 +191,10 @@ def show(info):
         print(i)
     print()
 
-show(text)
+# show(text)
+# print(text)
 
 # connect_db()
+
+
+
