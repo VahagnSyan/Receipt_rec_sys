@@ -128,13 +128,6 @@ plt.figure(figsize=(16, 10))
 plt.imshow(scanned)
 
 
-# def bw_scanner(image):
-#     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#     T = threshold_local(gray, 21, offset=5, method="gaussian")
-#     return (gray > T).astype("uint8") * 255
-
-
-# result = bw_scanner(scanned)
 plot_gray(scanned)
 
 RESULT_IMAGE_PATH = "./src/images/result.png"
