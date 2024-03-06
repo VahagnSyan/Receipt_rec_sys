@@ -9,7 +9,7 @@ from skimage.filters import threshold_local
 from PIL import Image
 
 
-file_name = "./src/images/4.jpg"
+file_name = "./src/images/1.jpg"
 img = Image.open(file_name)
 img.thumbnail((600, 600), Image.LANCZOS)
 
@@ -137,8 +137,36 @@ output.save(RESULT_IMAGE_PATH)
 
 img = Image.open(RESULT_IMAGE_PATH)
 
-text = pytesseract.image_to_string(img, lang="Armenian+rus")
+text = pytesseract.image_to_string(img, lang="script/Armenian+eng+rus")
 
-print(text)
+def filter(info) -> list:
+    result = []
+    index = 2
+    while index < len(info):
+        # if 'Դաս' in info[index] or 'Դամ' in info[index] or 'Դպա' in info[index]:
+        #     result.append(info[index + 1] + '\t\t' + info[index + 2].split(' ')[-1])
+
+        if ('Հատ' in info[index]
+                or 'Յ1ատ' in info[index]
+                or 'Յատ' in info[index]
+                or 'Վատ' in info[index]
+                or 'գի' in info[index]
+                or 'կգ' in info[index]
+                or 'գր' in info[index]):
+            result.append(info[index] + '\t\t' + info[index + 1].split(' ')[-1])
+
+        if 'Ընդամենը' in info[index]:
+            result.append(info[index])
+        index += 1
+    return result
+
+def show(info):
+    text = info.split('\n')
+    text2 = [x for x in text if x != '']
+    for i in filter(text2):
+        print(i)
+    print()
+
+show(text)
 
 # connect_db()
