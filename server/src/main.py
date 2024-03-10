@@ -9,7 +9,7 @@ from skimage.filters import threshold_local
 from PIL import Image
 
 
-file_name = "./src/images/2.jpg"
+file_name = "./src/images/4.jpg"
 img = Image.open(file_name)
 img.thumbnail((600, 600), Image.LANCZOS)
 
@@ -153,15 +153,15 @@ output.save(RESULT_IMAGE_PATH)
 
 img = Image.open(RESULT_IMAGE_PATH)
 
-text = pytesseract.image_to_string(img, lang="Armenian+rus")
+text = pytesseract.image_to_string(img, lang="hye+eng")
 
 for i in range(3):
     if check_receipt_angle(text):
-        print(text)
+        #print(text)
         break
     rotate_image_90(RESULT_IMAGE_PATH)
     img = Image.open(RESULT_IMAGE_PATH)
-    text = pytesseract.image_to_string(img, lang="Armenian+rus")
+    text = pytesseract.image_to_string(img, lang="hye+eng")
 
 
 def filter(info) -> list:
@@ -196,7 +196,7 @@ def show(info):
     print()
 
 
-# show(text)
-# print(text)
+show(text)
+print(text)
 
 # connect_db()

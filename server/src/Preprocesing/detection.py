@@ -20,7 +20,7 @@ class Detection:
                     or "գր" in info[index]
                 ):
                     product = dict()
-                    product['name'] = info[index]
+                    product['name'] = find_name(info[index])
                     product['price'] = info[index + 1].split(" ")[-1]
                     product['category'] = ''
 
@@ -33,5 +33,13 @@ class Detection:
             text = info.split("\n")
             text2 = [x for x in text if x != ""]
             return filter(text2)
+
+        def find_name(name):
+            output_name = ''
+            for i in name:
+                if i.isdigit():
+                    break
+                output_name += i
+            return output_name
 
         return result(self.data)

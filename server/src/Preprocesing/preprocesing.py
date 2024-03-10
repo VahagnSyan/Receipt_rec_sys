@@ -10,6 +10,8 @@ import cv2
 import matplotlib.pyplot as plt
 from skimage.filters import threshold_local
 
+import detection
+
 class Preprocessing:
     def __init__(self, file_name):
         self.file_name = file_name
@@ -125,18 +127,20 @@ class Preprocessing:
 
         img = Image.open(RESULT_IMAGE_PATH)
 
-        text = pytesseract.image_to_string(img, lang="Armenian+rus")
+        text = pytesseract.image_to_string(img, lang="hye+eng")
 
         for _ in range(3):
             if self.check_receipt_angle(text):
                 return text
             self.rotate_image_90(RESULT_IMAGE_PATH)
             img = Image.open(RESULT_IMAGE_PATH)
-            text = pytesseract.image_to_string(img, lang="Armenian+rus")
+            text = pytesseract.image_to_string(img, lang="hye+eng")
 
         return text
 
 
 preprocessor = Preprocessing("./src/images/6.jpg")
 result_text = preprocessor.process_image()
-print(result_text)
+result = detection.Detection(result_text)
+for i in result.detection():
+    print(i)
