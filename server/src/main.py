@@ -124,7 +124,7 @@ def wrap_perspective(img, rect):
 
 
 def check_receipt_angle(text):
-    return 'Արարատ Սուպերմարկետ' in text.split('\n')
+    return "Արարատ Սուպերմարկետ" in text.split("\n")
 
 
 def rotate_image_90(image_path):
@@ -163,6 +163,7 @@ for i in range(3):
     img = Image.open(RESULT_IMAGE_PATH)
     text = pytesseract.image_to_string(img, lang="Armenian+rus")
 
+
 def filter(info) -> list:
     result = []
     index = 2
@@ -170,31 +171,32 @@ def filter(info) -> list:
         # if 'Դաս' in info[index] or 'Դամ' in info[index] or 'Դպա' in info[index]:
         #     result.append(info[index + 1] + '\t\t' + info[index + 2].split(' ')[-1])
 
-        if ('Հատ' in info[index]
-                or 'Յ1ատ' in info[index]
-                or 'Յատ' in info[index]
-                or 'Վատ' in info[index]
-                or 'գի' in info[index]
-                or 'կգ' in info[index]
-                or 'գր' in info[index]):
-            result.append(info[index] + '\t\t' + info[index + 1].split(' ')[-1])
+        if (
+            "Հատ" in info[index]
+            or "Յ1ատ" in info[index]
+            or "Յատ" in info[index]
+            or "Վատ" in info[index]
+            or "գի" in info[index]
+            or "կգ" in info[index]
+            or "գր" in info[index]
+        ):
+            result.append(info[index] + "\t\t" + info[index + 1].split(" ")[-1])
 
-        if 'Ընդամենը' in info[index]:
+        if "Ընդամենը" in info[index]:
             result.append(info[index])
         index += 1
     return result
 
+
 def show(info):
-    text = info.split('\n')
-    text2 = [x for x in text if x != '']
+    text = info.split("\n")
+    text2 = [x for x in text if x != ""]
     for i in filter(text2):
         print(i)
     print()
+
 
 # show(text)
 # print(text)
 
 # connect_db()
-
-
-
