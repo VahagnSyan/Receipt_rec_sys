@@ -8,7 +8,6 @@ import pytesseract
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from skimage.filters import threshold_local
 
 import detection
 
@@ -70,17 +69,6 @@ class Preprocessing:
         M = cv2.getPerspectiveTransform(rect, dst)
         return cv2.warpPerspective(img, M, (maxWidth, maxHeight))
 
-    @staticmethod
-    def check_receipt_angle(text):
-        return "Արարատ Սուպերմարկետ" in text.split("\n")
-
-    @staticmethod
-    def rotate_image_90(image_path):
-        image = cv2.imread(image_path)
-        rotated_image = cv2.transpose(image)
-        rotated_image = cv2.flip(rotated_image, 0)
-        cv2.imwrite(image_path, rotated_image)
-
     def process_image(self):
         img = Image.open(self.file_name)
         img.thumbnail((600, 600), Image.LANCZOS)
@@ -129,6 +117,7 @@ class Preprocessing:
 
         text = pytesseract.image_to_string(img, lang="hye+eng")
 
+<<<<<<< HEAD:server/src/Preprocesing/preprocesing.py
         for _ in range(3):
             if self.check_receipt_angle(text):
                 return text
@@ -136,6 +125,8 @@ class Preprocessing:
             img = Image.open(RESULT_IMAGE_PATH)
             text = pytesseract.image_to_string(img, lang="hye+eng")
 
+=======
+>>>>>>> 654c92a72ea49b511f44bacdcaa16a95a3a4c60f:server/src/preprocessing/preprocessing.py
         return text
 
 
