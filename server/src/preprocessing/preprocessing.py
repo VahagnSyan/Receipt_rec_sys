@@ -9,7 +9,6 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-import detection
 
 class Preprocessing:
     def __init__(self, file_name):
@@ -117,21 +116,9 @@ class Preprocessing:
 
         text = pytesseract.image_to_string(img, lang="hye+eng")
 
-<<<<<<< HEAD:server/src/Preprocesing/preprocesing.py
-        for _ in range(3):
-            if self.check_receipt_angle(text):
-                return text
-            self.rotate_image_90(RESULT_IMAGE_PATH)
-            img = Image.open(RESULT_IMAGE_PATH)
-            text = pytesseract.image_to_string(img, lang="hye+eng")
-
-=======
->>>>>>> 654c92a72ea49b511f44bacdcaa16a95a3a4c60f:server/src/preprocessing/preprocessing.py
         return text
 
 
-preprocessor = Preprocessing("./src/images/6.jpg")
-result_text = preprocessor.process_image()
-result = detection.Detection(result_text)
-for i in result.detection():
-    print(i)
+# preprocessor = Preprocessing("./src/images/6.jpg")
+# result_text = preprocessor.process_image()
+# print(result_text)
