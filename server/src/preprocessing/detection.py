@@ -1,3 +1,7 @@
+'''
+Modulle for text detection
+'''
+
 class Detection:
     def __init__(self, data = ''):
         self.data = data
@@ -21,7 +25,8 @@ class Detection:
                 ):
                     product = dict()
                     product['name'] = find_name(info[index])
-                    product['price'] = info[index + 1].split(" ")[-1]
+                    price = info[index + 1].split(" ")[-1]
+                    product['price'] = price if price.replace('.', '').isdigit() else 0
                     product['category'] = ''
 
                     result.append(product)
@@ -37,9 +42,10 @@ class Detection:
         def find_name(name):
             output_name = ''
             for i in name:
-                if i.isdigit():
+                if i.isdigit() or i in '()<>':
                     break
                 output_name += i
+            output_name = output_name.replace('կգ', '')
             return output_name
 
         return result(self.data)
