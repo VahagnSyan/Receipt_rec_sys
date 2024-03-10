@@ -9,9 +9,6 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-import detection
-#from Receipt_rec_sys.server.src.main import RESULT_IMAGE_PATH
-
 
 class Preprocessing:
     def __init__(self, file_name):
@@ -122,8 +119,6 @@ class Preprocessing:
         return text
 
 
-preprocessor = Preprocessing("./src/images/1.jpg")
-result_text = preprocessor.process_image()
-result = detection.Detection(result_text)
-for i in result.detection():
-    print(i)
+# preprocessor = Preprocessing("./src/images/6.jpg")
+# result_text = preprocessor.process_image()
+# print(result_text)
