@@ -17,22 +17,22 @@ users_collection = db["users"]
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+UPLOAD_FOLDER = "./src/images"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 
 @app.route("/process-image", methods=["POST"])
 def process_image():
-    print(request.json)
-    if 'image' not in request.files:
+    if "image" not in request.files:
         return jsonify({"success": False, "message": "No image file provided"}), 400
 
-    image_file = request.files['image']
+    image_file = request.files["image"]
 
-    if image_file.filename == '':
+    if image_file.filename == "":
         return jsonify({"success": False, "message": "No selected file"}), 400
 
     # Save the uploaded image to the 'uploads' folder
-    image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_file.filename)
+    image_path = os.path.join(app.config["UPLOAD_FOLDER"], image_file.filename)
     image_file.save(image_path)
 
     # Perform image preprocessing (You can replace this with your actual preprocessing code)
