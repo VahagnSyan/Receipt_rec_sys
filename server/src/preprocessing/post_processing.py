@@ -6,7 +6,7 @@ Doc
 import cv2
 from PIL import Image
 import pytesseract
-from preprocessing import Preprocessing
+#from preprocessing import Preprocessing
 
 class Post_Processing:
     '''Doc'''
@@ -36,7 +36,7 @@ class Post_Processing:
             self.text = pytesseract.image_to_string(img, lang="Armenian+rus")
         return ''
 
-preprocessor = Preprocessing("./src/images/7.jpg")
-result_text = preprocessor.process_image()
-post = Post_Processing(result_text)
-print(post.post_process())
+# preprocessor = Preprocessing("./src/images/7.jpg")
+# result_text = preprocessor.process_image()
+# post = Post_Processing(result_text)
+# print(post.post_process())
