@@ -5,6 +5,7 @@ from hashlib import sha256
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 
 client = MongoClient(os.environ.get("MONGO_URI"))
@@ -20,6 +21,8 @@ def register():
     data = request.json
     username = data.get("username")
     password = data.get("password")
+    categories = []
+    purchases = []
 
     # Check if the username already exists
     if users_collection.find_one({"username": username}):
@@ -29,7 +32,7 @@ def register():
     hashed_password = sha256(password.encode()).hexdigest()
 
     # Insert the user into the database
-    users_collection.insert_one({"username": username, "password": hashed_password})
+    users_collection.insert_one({"username": username, "password": hashed_password, "categories": categories, "purchases": purchases})
     return jsonify({"success": True, "message": "Registration successful"}), 201
 
 
