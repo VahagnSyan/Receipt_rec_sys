@@ -117,8 +117,3 @@ class Preprocessing:
         text = pytesseract.image_to_string(img, lang="hye+eng")
 
         return text
-
-
-# preprocessor = Preprocessing("./src/images/6.jpg")
-# result_text = preprocessor.process_image()
-# print(result_text)
