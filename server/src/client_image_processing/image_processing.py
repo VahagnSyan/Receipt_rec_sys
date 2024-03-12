@@ -37,7 +37,7 @@ def process_image():
 
     # Perform image preprocessing (You can replace this with your actual preprocessing code)
     processed_text = preprocess_image(image_path)
-
+    
     # Return the processed text to the client
     return jsonify({"success": True, "processed_text": processed_text}), 200
 

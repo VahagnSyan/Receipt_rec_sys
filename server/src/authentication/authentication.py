@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from pymongo import MongoClient
 from hashlib import sha256
 from dotenv import load_dotenv
@@ -11,6 +12,7 @@ db = client[os.environ.get("DB_NAME")]
 users_collection = db["users"]
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/register", methods=["POST"])
