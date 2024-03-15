@@ -1,17 +1,17 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, FC, useRef, useState } from "react";
 import IMAGES from "../../images/Images";
-import { getReceiptProducts } from "../../services/authentication";
 
-const UploadImageWidget = () => {
+interface IUploadImageWidget {
+  scanReceipt: (id: string, image: File) => void;
+}
+const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
   const [dragActive, setDragActive] = useState<boolean>(false);
   const inputRef = useRef<any>(null);
   const [files, setFiles] = useState<any>([]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    console.log("File has been added");
     if (e.target.files && e.target.files[0]) {
-      console.log(e.target.files);
       for (let i = 0; i < e.target.files["length"]; i++) {
         setFiles((prevState: any) => [...prevState, e.target.files![i]]);
       }
@@ -67,10 +67,6 @@ const UploadImageWidget = () => {
     inputRef.current.click();
   }
 
-  const scanReceipt = async () => {
-    const resp = await getReceiptProducts("65f4685be8c1767719bcaa29", files[0]);
-    console.log(resp);
-  };
   return (
     <div className="w-full h-full bg-transparent rounded-xl">
       <form
@@ -114,7 +110,7 @@ const UploadImageWidget = () => {
           </button>
           <button
             className="bg-[#4352F6] text-white text-[20px] font-semibold py-4 px-8 rounded-xl"
-            onClick={scanReceipt}
+            onClick={() => scanReceipt("65f4727453f6c89fd179bd92", files[0])}
           >
             Submit
           </button>
