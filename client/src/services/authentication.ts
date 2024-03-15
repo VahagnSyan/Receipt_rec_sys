@@ -18,6 +18,7 @@ export const login = async (username: string, password: string) => {
   }
   return response.data;
 };
+
 export const register = async (username: string, password: string) => {
   const response = await axios.post(
     "http://127.0.0.1:5000/register",
@@ -32,4 +33,16 @@ export const register = async (username: string, password: string) => {
     }
   );
   return response.data;
+};
+
+export const getReceiptProducts = async (id: string, image: File) => {
+  const formData = new FormData();
+  formData.append("id", id);
+  formData.append("image", image);
+  const response = await axios.post(
+    "http://127.0.0.1:5000/process-image",
+    formData
+  );
+
+  return response.data.processed_text;
 };

@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from recognition.recognition import receipt_recognition
 from utils.utils import check_categories
+from flask_cors import CORS
 
 
 load_dotenv()
@@ -13,6 +14,7 @@ db = client[os.environ.get("DB_NAME")]
 users_collection = db["users"]
 
 app = Flask(__name__)
+CORS(app)
 
 UPLOAD_FOLDER = "./src/images"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -24,7 +26,7 @@ def process_image():
         return jsonify({"success": False, "message": "No image file provided"}), 400
 
     image_file = request.files["image"]
-    userID = request.form.get('id')
+    userID = request.form.get("id")
 
     if image_file.filename == "":
         return jsonify({"success": False, "message": "No selected file"}), 400
