@@ -19,4 +19,4 @@ def check_categories(userID, processed_text):
     categories = user_data.get("categories", [])
     purchases = user_data.get("purchases", [])
     for item in processed_text:
-        print(item.get('name'))
+        print(item.get("name"))
