@@ -33,7 +33,7 @@ def process_image():
     image_file.save(image_path)
     processed_text = receipt_recognition(image_path)
     check_categories(userID, processed_text)
-    return jsonify({"success": True, "processed_text": processed_text}), 200
+    return jsonify({"success": True, "products": processed_text}), 200
 
 
 if __name__ == "__main__":
