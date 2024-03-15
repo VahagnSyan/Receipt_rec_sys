@@ -1,11 +1,5 @@
-import UploadImageWidget from "../../UploadImageWidget/UploadImageWidget";
-
 const Home = () => {
-  return (
-    <div>
-      <UploadImageWidget />
-    </div>
-  );
+  return <div>Helllo</div>;
 };
 
 export default Home;
