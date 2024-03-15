@@ -24,6 +24,7 @@ def process_image():
         return jsonify({"success": False, "message": "No image file provided"}), 400
 
     image_file = request.files["image"]
+    userID = request.form.get('id')
 
     if image_file.filename == "":
         return jsonify({"success": False, "message": "No selected file"}), 400
@@ -31,7 +32,7 @@ def process_image():
     image_path = os.path.join(app.config["UPLOAD_FOLDER"], image_file.filename)
     image_file.save(image_path)
     processed_text = receipt_recognition(image_path)
-    check_categories("65f094c80c8e3a2d123845ee", processed_text)
+    check_categories(userID, processed_text)
     return jsonify({"success": True, "processed_text": processed_text}), 200
 
 
