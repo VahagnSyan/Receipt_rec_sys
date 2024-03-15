@@ -13,10 +13,25 @@ db = client[os.environ.get("DB_NAME")]
 users_collection = db["users"]
 
 
+def preprocess_purchases(purchases):
+    """
+    Preprocesses the purchases data into a dictionary for faster lookup.
+    """
+    purchases_dict = {}
+    for purchase in purchases:
+        purchases_dict[purchase['name']] = purchase['category']
+    return purchases_dict
+
+
 def check_categories(userID, processed_text):
     object_id = ObjectId(userID)
     user_data = users_collection.find_one({"_id": object_id})
-    categories = user_data.get("categories", [])
     purchases = user_data.get("purchases", [])
+    
+    purchases_dict = preprocess_purchases(purchases)
+    
     for item in processed_text:
-        print(item.get('name'))
+        name = item.get('name')
+        category = purchases_dict.get(name)
+        if category:
+            item['category'] = category
