@@ -48,7 +48,8 @@ def login():
     # Check if the username and hashed password match
     user = users_collection.find_one({"username": username, "password": hashed_password})
     if user:
-        return jsonify({"success": True, "message": "Login successful"}), 200
+        user_id = str(user.get('_id'))
+        return jsonify({"success": True, "user_id": user_id, "username": username, "message": "Login successful"}), 200
     else:
         return jsonify({"success": False, "message": "Invalid username or password"}), 401
 
