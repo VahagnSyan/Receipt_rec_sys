@@ -2,8 +2,12 @@
 Modulle for text detection
 '''
 
+
+import uuid
+
+
 class Detection:
-    def __init__(self, data = ''):
+    def __init__(self, data=''):
         self.data = data
 
     def detection(self):
@@ -11,9 +15,6 @@ class Detection:
             result = []
             index = 2
             while index < len(info):
-                # if 'Դաս' in info[index] or 'Դամ' in info[index] or 'Դպա' in info[index]:
-                #     result.append(info[index + 1] + '\t\t' + info[index + 2].split(' ')[-1])
-
                 if (
                     "Հատ" in info[index]
                     or "Յ1ատ" in info[index]
@@ -24,6 +25,7 @@ class Detection:
                     or "գր" in info[index]
                 ):
                     product = dict()
+                    product['id'] = str(uuid.uuid4())
                     product['name'] = find_name(info[index])
                     price = info[index + 1].split(" ")[-1]
                     product['price'] = price if price.replace('.', '').isdigit() else 0
