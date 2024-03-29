@@ -20,23 +20,28 @@ UPLOAD_FOLDER = "./src/images"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
-@app.route("/process-image", methods=["POST"])
-def process_image():
-    if "image" not in request.files:
-        return jsonify({"success": False, "message": "No image file provided"}), 400
+@app.route("/process-images", methods=["POST"])
+def process_images():
+    if "images" not in request.files:
+        return jsonify({"success": False, "message": "No image files provided"}), 400
 
-    image_file = request.files["image"]
+    images = request.files.getlist("images")
     userID = request.form.get("id")
-
-    if image_file.filename == "":
-        return jsonify({"success": False, "message": "No selected file"}), 400
-
-    image_path = os.path.join(app.config["UPLOAD_FOLDER"], image_file.filename)
-    image_file.save(image_path)
-    processed_text = receipt_recognition(image_path)
-    check_categories(userID, processed_text)
-    return jsonify({"success": True, "products": processed_text}), 200
-
+    
+    results = []
+    
+    for image_file in images:
+        if image_file.filename == "":
+            return jsonify({"success": False, "message": "One or more selected files are empty"}), 400
+        
+        image_path = os.path.join(app.config["UPLOAD_FOLDER"], image_file.filename)
+        image_file.save(image_path)
+        processed_text = receipt_recognition(image_path)
+        check_categories(userID, processed_text)
+        
+        results.append({"filename": image_file.filename, "products": processed_text})
+    
+    return jsonify({"success": True, "results": results}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
