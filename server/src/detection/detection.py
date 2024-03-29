@@ -1,53 +1,101 @@
-'''
-Modulle for text detection
-'''
+"""
+Module for text detection.
+
+This module provides functionality to detect text
+and extract relevant information from the detected text.
+"""
 
 
 import uuid
 
 
 class Detection:
+    """
+    Class for text detection and extraction.
+    """
+
     def __init__(self, data=''):
+        """
+        Initialize the Detection object.
+
+        Args:
+            data (str): The input text data to be processed.
+        """
         self.data = data
 
-    def detection(self):
-        def filter(info) -> list:
+    def detect_text(self):
+        """
+        Perform text detection and extraction.
+
+        This method processes the input text data
+        to detect relevant information.
+        It filters the detected text to extract product
+        information such as name, price, and category.
+
+        Returns:
+            list: A list of dictionaries containing the
+            extracted product information.
+        """
+        def filter_text(info) -> list:
+            """
+            Filter the detected text to extract product information.
+
+            Args:
+                info (list): The detected text information.
+
+            Returns:
+                list: A list of dictionaries containing the extracted product information.
+            """
             result = []
             index = 2
             while index < len(info):
-                if (
-                    "Հատ" in info[index]
-                    or "Յ1ատ" in info[index]
-                    or "Յատ" in info[index]
-                    or "Վատ" in info[index]
-                    or "գի" in info[index]
-                    or "կգ" in info[index]
-                    or "գր" in info[index]
-                ):
-                    product = dict()
-                    product['id'] = str(uuid.uuid4())
-                    product['name'] = find_name(info[index])
-                    price = info[index + 1].split(" ")[-1]
-                    product['price'] = price if price.replace('.', '').isdigit() else 0
-                    product['category'] = ''
-
+                keywords = ["Հատ", "Յ1ատ", "Յատ", "Վատ", "գի", "կգ", "գր"]
+                if any(keyword in info[index] for keyword in keywords):
+                    product = {
+                        'id': str(uuid.uuid4()),
+                        'name': self.find_name(info[index]),
+                        'price': (
+                            info[index + 1].split(" ")[-1]
+                            if info[index + 1].replace('.', '').isdigit()
+                            else 0
+                        ),
+                        'category': ''
+                    }
                     result.append(product)
-
                 index += 1
             return result
 
-        def result(info):
-            text = info.split("\n")
-            text2 = [x for x in text if x != ""]
-            return filter(text2)
+        def process_text(info):
+            """
+            Process the detected text and extract product information.
 
-        def find_name(name):
-            output_name = ''
-            for i in name:
-                if i.isdigit() or i in '()<>':
-                    break
-                output_name += i
-            output_name = output_name.replace('կգ', '')
-            return output_name
+            Args:
+                info (str): The detected text data.
 
-        return result(self.data)
+            Returns:
+                list: A list of dictionaries containing the extracted product information.
+            """
+            text_lines = info.split("\n")
+            filtered_text = [line for line in text_lines if line]
+            return filter_text(filtered_text)
+
+        return process_text(self.data)
+
+    @staticmethod
+    def find_name(name):
+        """
+        Extract the product name from the detected text.
+
+        Args:
+            name (str): The detected text containing the product name.
+
+        Returns:
+            str: The extracted product name.
+        """
+        output_name = ''
+        for char in name:
+            if char.isdigit() or char in '()<>':
+                break
+            output_name += char
+        output_name = output_name.replace('կգ', '')
+        return output_name
