@@ -1,26 +1,26 @@
 import { FC, useEffect, useState } from "react";
 import { IProduct } from "../../types";
 
-interface IProductProps extends IProduct {
+interface IProductProps {
+  product: IProduct;
   isSubmited: boolean;
   editedProducts: IProduct[];
   setEditedProducts: (arg: IProduct[]) => void;
 }
 
 const Product: FC<IProductProps> = ({
-  name,
-  category,
-  price,
+  product,
   isSubmited,
   editedProducts,
   setEditedProducts,
 }) => {
   const [editedProduct, setEditedProduct] = useState<IProduct>({
-    name,
-    category,
-    price,
+    name: product.name,
+    category: product.category,
+    price: product.price,
   });
 
+  console.log(product);
   const handleProductChange = (name: string, value: string) => {
     setEditedProduct({ ...editedProduct, [name]: value });
   };

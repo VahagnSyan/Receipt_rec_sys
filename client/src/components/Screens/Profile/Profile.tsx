@@ -15,7 +15,6 @@ const Profile = () => {
     console.log("loading");
     const products = await getReceiptProducts(id, image);
     console.log("finished");
-
     setProducts(products);
   };
 
@@ -26,6 +25,7 @@ const Profile = () => {
     console.log("finished");
   };
 
+  console.log(products);
   return (
     <div className="flex gap-[50px] w-full h-full">
       <Sidebar />

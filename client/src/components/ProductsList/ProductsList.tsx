@@ -16,17 +16,17 @@ const ProductsList: FC<IProductsList> = ({ products, onAddProducts }) => {
         <h1 className="w-[260px]">Category</h1>
         <h1 className="w-[260px]">Price</h1>
       </div>
-      {products.map((product, i) => {
-        return (
+      {products.map((item: any, i) =>
+        item.products.map((product: any, j: number) => (
           <Product
-            key={i}
-            {...product}
+            key={`${i}-${j}`}
+            product={product}
             isSubmited={isSubmited}
             editedProducts={editedProducts}
             setEditedProducts={setEditedProducts}
           />
-        );
-      })}
+        ))
+      )}
       <button
         className="bg-[#4352F6] text-white text-[20px] font-semibold py-4 px-8 rounded-xl"
         onClick={() => {
