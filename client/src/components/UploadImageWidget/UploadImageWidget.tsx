@@ -18,13 +18,13 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
     }
   }
 
-  function handleSubmitFile(e: ChangeEvent<HTMLInputElement>) {
-    if (files.length === 0) {
-      // TODO:  no file has been submitted
-    } else {
-      // TODO: write submit logic here
-    }
-  }
+  // function handleSubmitFile(e: ChangeEvent<HTMLInputElement>) {
+  //   if (files.length === 0) {
+  //     // TODO:  no file has been submitted
+  //   } else {
+  //     // TODO: write submit logic here
+  //   }
+  // }
 
   function handleDrop(e: any) {
     e.preventDefault();
@@ -55,7 +55,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
     setDragActive(true);
   }
 
-  function removeFile(fileName: any, idx: any) {
+  function removeFile(idx: any) {
     const newArr = [...files];
     newArr.splice(idx, 1);
     setFiles([]);
@@ -110,7 +110,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
           </button>
           <button
             className="bg-[#4352F6] text-white text-[20px] font-semibold py-4 px-8 rounded-xl"
-            onClick={() => scanReceipt("65f4727453f6c89fd179bd92", files[0])}
+            onClick={() => scanReceipt("65f4727453f6c89fd179bd92", files[0])} // TODO: fix id
           >
             Submit
           </button>
@@ -123,7 +123,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
                 <span>{file.name}</span>
                 <span
                   className="text-red-500 cursor-pointer"
-                  onClick={() => removeFile(file.name, idx)}
+                  onClick={() => removeFile(idx)}
                 >
                   remove
                 </span>

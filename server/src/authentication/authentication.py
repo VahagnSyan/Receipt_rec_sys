@@ -32,7 +32,9 @@ def register():
     hashed_password = sha256(password.encode()).hexdigest()
 
     # Insert the user into the database
-    users_collection.insert_one({"username": username, "password": hashed_password, "categories": categories, "purchases": purchases})
+    users_collection.insert_one(
+        {"username": username, "password": hashed_password, "categories": categories, "purchases": purchases}
+    )
     return jsonify({"success": True, "message": "Registration successful"}), 201
 
 

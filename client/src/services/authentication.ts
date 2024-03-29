@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IProduct } from "../types";
 
 export const login = async (username: string, password: string) => {
   const response = await axios.post(
@@ -44,5 +45,14 @@ export const getReceiptProducts = async (id: string, image: File) => {
     formData
   );
 
-  return response.data.processed_text;
+  return response.data.products;
+};
+
+export const addProducts = async (id: string, products: IProduct[]) => {
+  const response = await axios.post("http://127.0.0.1:5000/add", {
+    id,
+    products,
+  });
+
+  return response.data;
 };

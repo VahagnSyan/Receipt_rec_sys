@@ -1,7 +1,20 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { IProduct } from "../../types";
 
-const Product: FC<IProduct> = ({ name, category, price }) => {
+interface IProductProps extends IProduct {
+  isSubmited: boolean;
+  editedProducts: IProduct[];
+  setEditedProducts: (arg: IProduct[]) => void;
+}
+
+const Product: FC<IProductProps> = ({
+  name,
+  category,
+  price,
+  isSubmited,
+  editedProducts,
+  setEditedProducts,
+}) => {
   const [editedProduct, setEditedProduct] = useState<IProduct>({
     name,
     category,
@@ -11,6 +24,10 @@ const Product: FC<IProduct> = ({ name, category, price }) => {
   const handleProductChange = (name: string, value: string) => {
     setEditedProduct({ ...editedProduct, [name]: value });
   };
+
+  useEffect(() => {
+    setEditedProducts([...editedProducts, editedProduct]);
+  }, [isSubmited]);
 
   return (
     <div className="flex items-center gap-[40px]">
