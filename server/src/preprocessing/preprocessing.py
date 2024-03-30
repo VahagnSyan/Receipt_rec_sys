@@ -152,37 +152,41 @@ class Preprocessing:
         Returns:
             str: The extracted text from the processed image.
         """
-        img = Image.open(self.file_name)
-        img.thumbnail((600, 600), Image.LANCZOS)
-        image = cv2.imread(self.file_name)
-        resize_ratio = 500 / image.shape[0]
-        original = image.copy()
-        image = self.opencv_resize(image, resize_ratio)
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        self.plot_gray(gray)
-        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-        self.plot_gray(blurred)
-        rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9))
-        dilated = cv2.dilate(blurred, rect_kernel)
-        self.plot_gray(dilated)
-        edged = cv2.Canny(dilated, 100, 200, apertureSize=3)
-        self.plot_gray(edged)
-        contours, hierarchy = cv2.findContours(edged, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        image_with_contours = cv2.drawContours(image.copy(), contours, -1, (0, 255, 0), 3)
-        self.plot_rgb(image_with_contours)
-        largest_contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
-        image_with_largest_contours = cv2.drawContours(image.copy(), largest_contours, -1, (0, 255, 0), 3)
-        self.plot_rgb(image_with_largest_contours)
-        receipt_contour = self.get_receipt_contour(largest_contours)
-        image_with_receipt_contour = cv2.drawContours(image.copy(), [receipt_contour], -1, (0, 255, 0), 2)
-        self.plot_rgb(image_with_receipt_contour)
-        scanned = self.wrap_perspective(original.copy(), self.contour_to_rect(receipt_contour, resize_ratio))
-        plt.figure(figsize=(16, 10))
-        plt.imshow(scanned)
-        self.plot_gray(scanned)
-        result_image_path = "./src/images/result.png"
-        output = Image.fromarray(scanned)
-        output.save(result_image_path)
-        img = Image.open(result_image_path)
-        text = pytesseract.image_to_string(img, lang="hye+eng")
-        return text
+        try:
+            img = Image.open(self.file_name)
+            img.thumbnail((600, 600), Image.LANCZOS)
+            image = cv2.imread(self.file_name)
+            resize_ratio = 500 / image.shape[0]
+            original = image.copy()
+            image = self.opencv_resize(image, resize_ratio)
+            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            self.plot_gray(gray)
+            blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+            self.plot_gray(blurred)
+            rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9))
+            dilated = cv2.dilate(blurred, rect_kernel)
+            self.plot_gray(dilated)
+            edged = cv2.Canny(dilated, 100, 200, apertureSize=3)
+            self.plot_gray(edged)
+            contours, hierarchy = cv2.findContours(edged, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            image_with_contours = cv2.drawContours(image.copy(), contours, -1, (0, 255, 0), 3)
+            self.plot_rgb(image_with_contours)
+            largest_contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
+            image_with_largest_contours = cv2.drawContours(image.copy(), largest_contours, -1, (0, 255, 0), 3)
+            self.plot_rgb(image_with_largest_contours)
+            receipt_contour = self.get_receipt_contour(largest_contours)
+            image_with_receipt_contour = cv2.drawContours(image.copy(), [receipt_contour], -1, (0, 255, 0), 2)
+            self.plot_rgb(image_with_receipt_contour)
+            scanned = self.wrap_perspective(original.copy(), self.contour_to_rect(receipt_contour, resize_ratio))
+            plt.figure(figsize=(16, 10))
+            plt.imshow(scanned)
+            self.plot_gray(scanned)
+            result_image_path = "./src/images/result.png"
+            output = Image.fromarray(scanned)
+            output.save(result_image_path)
+            img = Image.open(result_image_path)
+            text = pytesseract.image_to_string(img, lang="Armenian+eng")
+            return text
+        except cv2.error as e:
+            print('Erooooooooooooooooooooooor', e)
+            return ''
