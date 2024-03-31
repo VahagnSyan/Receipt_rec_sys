@@ -54,9 +54,14 @@ def add_purchases():
             return jsonify({"error": "User not found"}), 404
         purchases = user.get("purchases", [])
         for item in data:
-            purchases.append(item)
+            for purchase in item.get("products"):
+                purchases.append(purchase)
         categories = user.get("categories", [])
-        products_categories = [d["category"] for d in data]
+        # products_categories = [d["category"] for d in data]
+        products_categories = []
+        for item in data:
+            for category in item["products"].get("category"):
+                products_categories.append(category)
         for item in products_categories:
             if item not in categories:
                 categories.append(item)
