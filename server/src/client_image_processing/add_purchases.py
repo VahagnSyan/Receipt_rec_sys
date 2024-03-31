@@ -1,12 +1,19 @@
-from flask import Blueprint, request, jsonify
+"""
+Module for managing user purchases
+"""
+
+
+import os
+from flask import Flask, Blueprint, request, jsonify
+from flask_cors import CORS
 from pymongo import MongoClient
 import os
+from flask_cors import CORS
 from dotenv import load_dotenv
 from bson import ObjectId
 
-load_dotenv()
 
-# Connect to MongoDB
+load_dotenv()
 client = MongoClient(os.environ.get("MONGO_URI"))
 db = client[os.environ.get("DB_NAME")]
 users_collection = db["users"]

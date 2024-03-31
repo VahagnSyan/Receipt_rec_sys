@@ -1,10 +1,35 @@
+"""
+Module for Receipt Recognition.
+
+This module provides functionality to recognize text from receipt images.
+It includes preprocessing the image, extracting text, and detecting relevant information.
+
+Dependencies:
+    - preprocessing.Preprocessing
+    - preprocessing.PostProcessing
+    - detection.Detection
+"""
+
+
 from preprocessing.preprocessing import Preprocessing
-from preprocessing.post_processing import Post_Processing
+from preprocessing.post_processing import PostProcessing
 from detection.detection import Detection
 
 
 def receipt_recognition(image_path):
+    """
+    Perform receipt recognition.
+
+    This function preprocesses the input image, post-processes
+    the extracted text, and detects relevant information from the text.
+
+    Args:
+        image_path (str): The path to the input image.
+
+    Returns:
+        list: A list containing the detected text information.
+    """
     preprocess = Preprocessing(image_path)
-    post = Post_Processing(preprocess.process_image())
+    post = PostProcessing(preprocess.process_image())
     data = Detection(post.post_process())
-    return data.detection()
+    return data.detect_text()
