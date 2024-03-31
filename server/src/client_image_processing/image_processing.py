@@ -5,7 +5,6 @@ This module provides functionality to process images, perform receipt recognitio
 and extract information about products from the receipts.
 """
 
-
 import os
 from flask import Blueprint, request, jsonify
 from flask_cors import CORS
@@ -36,8 +35,11 @@ def process_images():
     Returns:
         JSON response indicating success or failure along with extracted product information.
     """
+
     if "images" not in request.files:
         return jsonify({"success": False, "message": "No image files provided"}), 400
+    print(request.files)
+
     images = request.files.getlist("images")
     userID = request.form.get("id")
     results = []

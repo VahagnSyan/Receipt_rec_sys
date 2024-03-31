@@ -40,18 +40,23 @@ export const register = async (username: string, password: string) => {
 export const getReceiptProducts = async (id: string, images: File[]) => {
   const formData = new FormData();
   formData.append("id", id);
+
   images.forEach((image, index) => {
-    formData.append(`images[]`, image );
+    formData.append("images", image, image.name); 
   });
 
   const response = await axios.post(
     "http://127.0.0.1:5000/process-images",
-    formData
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data", // Set content type header
+      },
+    }
   );
 
   return response.data.results;
 };
-
 export const addProducts = async (id: string, products: IProduct[]) => {
   const response = await axios.post("http://127.0.0.1:5000/add", {
     id,
