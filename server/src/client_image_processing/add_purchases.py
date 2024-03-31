@@ -38,8 +38,6 @@ def add_purchases():
         for item in data:
             for purchase in item.get("products"):
                 purchases.append(purchase)
-            for purchase in item.get("products"):
-                purchases.append(purchase)
         categories = user.get("categories", [])
         products_categories = []
         for item in data:
