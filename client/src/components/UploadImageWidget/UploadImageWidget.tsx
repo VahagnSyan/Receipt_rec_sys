@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useRef, useState } from "react";
 import IMAGES from "../../images/Images";
+import { getCurrentUserId } from "../../utils";
 
 interface IUploadImageWidget {
   scanReceipt: (id: string, image: File) => void;
@@ -88,6 +89,12 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
             multiple={true}
             onChange={handleChange}
             accept=".jpeg,.jpg,.png,.heic"
+            // @ts-ignore
+            webkitdirectory=""
+            // @ts-ignore
+            mozdirectory=""
+            // @ts-ignore
+            directory=""
           />
           <img
             src={IMAGES.folderIcon}
@@ -110,7 +117,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
           </button>
           <button
             className="bg-[#4352F6] text-white text-[20px] font-semibold py-4 px-8 rounded-xl"
-            onClick={() => scanReceipt("65f4727453f6c89fd179bd92", files[0])} // TODO: fix id
+            onClick={() => scanReceipt(getCurrentUserId(), files)} // TODO: fix id
           >
             Submit
           </button>

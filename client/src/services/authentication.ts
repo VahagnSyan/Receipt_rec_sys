@@ -16,6 +16,7 @@ export const login = async (username: string, password: string) => {
   );
   if (response.data.success) {
     localStorage.setItem("token", "true");
+    localStorage.setItem("id", response.data.user_id);
   }
   return response.data;
 };
@@ -36,10 +37,13 @@ export const register = async (username: string, password: string) => {
   return response.data;
 };
 
-export const getReceiptProducts = async (id: string, image: File) => {
+export const getReceiptProducts = async (id: string, images: File[]) => {
   const formData = new FormData();
   formData.append("id", id);
-  formData.append("images", image);
+  images.forEach((image, index) => {
+    formData.append(`images[]`, image );
+  });
+
   const response = await axios.post(
     "http://127.0.0.1:5000/process-images",
     formData
@@ -53,6 +57,5 @@ export const addProducts = async (id: string, products: IProduct[]) => {
     id,
     products,
   });
-
   return response.data;
 };

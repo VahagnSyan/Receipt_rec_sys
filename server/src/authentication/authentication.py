@@ -1,10 +1,8 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Blueprint, request, jsonify
 from pymongo import MongoClient
 from hashlib import sha256
 from dotenv import load_dotenv
 import os
-
 
 load_dotenv()
 
@@ -12,11 +10,10 @@ client = MongoClient(os.environ.get("MONGO_URI"))
 db = client[os.environ.get("DB_NAME")]
 users_collection = db["users"]
 
-app = Flask(__name__)
-CORS(app)
+auth_bp = Blueprint("auth", __name__)
 
 
-@app.route("/register", methods=["POST"])
+@auth_bp.route("/register", methods=["POST"])
 def register():
     data = request.json
     username = data.get("username")
@@ -38,7 +35,7 @@ def register():
     return jsonify({"success": True, "message": "Registration successful"}), 201
 
 
-@app.route("/login", methods=["POST"])
+@auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.json
     username = data.get("username")
@@ -50,11 +47,7 @@ def login():
     # Check if the username and hashed password match
     user = users_collection.find_one({"username": username, "password": hashed_password})
     if user:
-        user_id = str(user.get('_id'))
+        user_id = str(user.get("_id"))
         return jsonify({"success": True, "user_id": user_id, "username": username, "message": "Login successful"}), 200
     else:
         return jsonify({"success": False, "message": "Invalid username or password"}), 401
-
-
-if __name__ == "__main__":
-    app.run(debug=True)

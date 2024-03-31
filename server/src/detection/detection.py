@@ -1,13 +1,12 @@
-'''
+"""
 Modulle for text detection
-'''
-
+"""
 
 import uuid
 
 
 class Detection:
-    def __init__(self, data=''):
+    def __init__(self, data=""):
         self.data = data
 
     def detection(self):
@@ -25,11 +24,11 @@ class Detection:
                     or "գր" in info[index]
                 ):
                     product = dict()
-                    product['id'] = str(uuid.uuid4())
-                    product['name'] = find_name(info[index])
+                    product["id"] = str(uuid.uuid4())
+                    product["name"] = find_name(info[index])
                     price = info[index + 1].split(" ")[-1]
-                    product['price'] = price if price.replace('.', '').isdigit() else 0
-                    product['category'] = ''
+                    product["price"] = price if price.replace(".", "").isdigit() else 0
+                    product["category"] = ""
 
                     result.append(product)
 
@@ -42,12 +41,12 @@ class Detection:
             return filter(text2)
 
         def find_name(name):
-            output_name = ''
+            output_name = ""
             for i in name:
-                if i.isdigit() or i in '()<>':
+                if i.isdigit() or i in "()<>":
                     break
                 output_name += i
-            output_name = output_name.replace('կգ', '')
+            output_name = output_name.replace("կգ", "")
             return output_name
 
         return result(self.data)

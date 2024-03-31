@@ -5,7 +5,7 @@ interface IProductProps {
   product: IProduct;
   isSubmited: boolean;
   editedProducts: IProduct[];
-  setEditedProducts: (arg: IProduct[]) => void;
+  setEditedProducts: any;
 }
 
 const Product: FC<IProductProps> = ({
@@ -19,15 +19,36 @@ const Product: FC<IProductProps> = ({
     category: product.category,
     price: product.price,
   });
-
-  console.log(product);
   const handleProductChange = (name: string, value: string) => {
-    setEditedProduct({ ...editedProduct, [name]: value });
+    const productIndex = editedProducts.findIndex((p) => p.id === product.id);
+    if (productIndex !== -1) {
+      const updatedProducts = [...editedProducts];
+      updatedProducts[productIndex] = {
+        ...updatedProducts[productIndex],
+        [name]: value,
+      };
+      setEditedProducts(updatedProducts);
+      setEditedProduct({ ...editedProduct, [name]: value });
+    }
   };
 
   useEffect(() => {
-    setEditedProducts([...editedProducts, editedProduct]);
-  }, [isSubmited]);
+    if (isSubmited) {
+      setEditedProducts((prevProducts: IProduct[]) => {
+        const productIndex = prevProducts.findIndex(
+          (p) => p.id === editedProduct.id
+        );
+
+        if (productIndex === -1) {
+          return [...prevProducts, editedProduct];
+        } else {
+          const updatedProducts = [...prevProducts];
+          updatedProducts[productIndex] = editedProduct;
+          return updatedProducts;
+        }
+      });
+    }
+  }, [isSubmited, editedProduct, setEditedProducts]);
 
   return (
     <div className="flex items-center gap-[40px]">
