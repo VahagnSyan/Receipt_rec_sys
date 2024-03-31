@@ -7,6 +7,7 @@ and extract relevant information from the detected text.
 
 
 import uuid
+import datetime
 
 
 class Detection:
@@ -48,8 +49,13 @@ class Detection:
             """
             result = []
             index = 2
+            current_date = datetime.datetime.now()
+            day = current_date.day
+            month = current_date.month
+            year = current_date.year
+            date = f'{day}/{month}/{year}'
             while index < len(info):
-                keywords = ["Հատ", "Յ1ատ", "Յատ", "Վատ", "գի", "կգ", "գր"]
+                keywords = ["Հատ", "Յ1ատ", "Յատ", "Վատ", 'Գատ', "գի", "կգ", "գր"]
                 if any(keyword in info[index] for keyword in keywords):
                     product = {
                         'id': str(uuid.uuid4()),
@@ -59,7 +65,8 @@ class Detection:
                             if info[index + 1].replace('.', '').isdigit()
                             else 0
                         ),
-                        'category': ''
+                        'category': '',
+                        'date': date
                     }
                     result.append(product)
                 index += 1

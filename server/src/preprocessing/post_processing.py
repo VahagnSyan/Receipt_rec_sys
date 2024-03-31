@@ -61,7 +61,6 @@ class PostProcessing:
         result_image_path = "./src/images/result.png"
         for _ in range(3):
             if self.check_receipt_angle(self.text):
-                print('+-+-+-+-+-+-+', self.text)
                 return self.text
             self.rotate_image_90(result_image_path)
             img = Image.open(result_image_path)
