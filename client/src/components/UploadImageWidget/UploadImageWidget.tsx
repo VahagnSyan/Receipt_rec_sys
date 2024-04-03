@@ -4,8 +4,9 @@ import { getCurrentUserId } from "../../utils";
 
 interface IUploadImageWidget {
   scanReceipt: (id: string, image: File) => void;
+  setIsSubmited: (arg: boolean) => void
 }
-const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
+const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt , setIsSubmited}) => {
   const [dragActive, setDragActive] = useState<boolean>(false);
   const inputRef = useRef<any>(null);
   const [files, setFiles] = useState<any>([]);
@@ -116,8 +117,12 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt }) => {
             Browse Files
           </button>
           <button
+            type="button"
             className="bg-[#4352F6] text-white text-[20px] font-semibold py-4 px-8 rounded-xl"
-            onClick={() => scanReceipt(getCurrentUserId(), files)} // TODO: fix id
+            onClick={() => {
+              scanReceipt(getCurrentUserId(), files)
+              setIsSubmited(true)
+            }} 
           >
             Submit
           </button>

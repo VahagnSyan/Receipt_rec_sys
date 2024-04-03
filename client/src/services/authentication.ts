@@ -50,11 +50,10 @@ export const getReceiptProducts = async (id: string, images: File[]) => {
     formData,
     {
       headers: {
-        "Content-Type": "multipart/form-data", // Set content type header
+        "Content-Type": "multipart/form-data", 
       },
     }
   );
-
   return response.data.results;
 };
 export const addProducts = async (id: string, products: IProduct[]) => {
@@ -63,4 +62,10 @@ export const addProducts = async (id: string, products: IProduct[]) => {
     products,
   });
   return response.data;
+};
+export const getAnalytics = async (id: string) => {
+  const response = await axios.post("http://127.0.0.1:5000/analytics", {
+    id,
+  });
+  return response.data.purchases;
 };

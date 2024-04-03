@@ -8,6 +8,7 @@ interface IProductsList {
   onAddProducts: (id: string, product: IProduct[]) => void;
   isSubmited: boolean;
   setIsSubmited: (arg: boolean) => void;
+  setIsAdded: (arg: boolean) => void;
 }
 
 const ProductsList: FC<IProductsList> = ({
@@ -15,6 +16,7 @@ const ProductsList: FC<IProductsList> = ({
   onAddProducts,
   isSubmited,
   setIsSubmited,
+  setIsAdded,
 }) => {
   const [editedProducts, setEditedProducts] = useState(products);
 
@@ -39,13 +41,11 @@ const ProductsList: FC<IProductsList> = ({
           );
         })}
       <button
+        type="button"
         className="bg-[#4352F6] text-white text-[20px] font-semibold py-4 px-8 rounded-xl"
-        onClick={() => {
-          {
+        onClick={async() => {
             onAddProducts(getCurrentUserId(), editedProducts);
-            setIsSubmited(true);
-          }
-        }} // TODO: fix id
+        }}
       >
         Submit
       </button>

@@ -7,7 +7,7 @@ const SignIn = () => {
   const handleLogin = async (username: string, password: string) => {
     await login(username, password).then((response) => {
       if (response.success) {
-        navigate("/");
+        navigate("/profile");
       }
     });
   };

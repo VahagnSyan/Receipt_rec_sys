@@ -62,7 +62,7 @@ class Detection:
                         'name': self.find_name(info[index]),
                         'price': (
                             info[index + 1].split(" ")[-1]
-                            if info[index + 1].replace('.', '').isdigit()
+                            if info[index + 1].replace('.', '')
                             else 0
                         ),
                         'category': '',

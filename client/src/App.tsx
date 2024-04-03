@@ -5,6 +5,7 @@ import SignUp from "./components/Screens/SignUp/SignUp";
 import { useEffect, useState } from "react";
 import Profile from "./components/Screens/Profile/Profile";
 import Layout from "./components/Layout/Layout";
+import Dashboard from "./components/Screens/Dashboard";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -28,6 +29,7 @@ function App() {
           </>
         )}
         {isAuth && <Route path="/profile" element={<Profile />} />}
+        {isAuth && <Route path="/dashboard" element={<Dashboard />} />}
       </Route>
     </Routes>
   );
