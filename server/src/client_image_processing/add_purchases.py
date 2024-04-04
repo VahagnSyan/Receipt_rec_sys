@@ -1,5 +1,5 @@
 """
-Module for managing user purchases
+This module provides functionality for managing user purchases.
 """
 
 
@@ -17,12 +17,15 @@ load_dotenv()
 client = MongoClient(os.environ.get("MONGO_URI"))
 db = client[os.environ.get("DB_NAME")]
 users_collection = db["users"]
-
 add_bp = Blueprint("add", __name__)
 
 
 @add_bp.route("/add", methods=["POST"])
 def add_purchases():
+    '''
+    This function is used to add user purchases to the database. 
+    It expects a POST request containing JSON data
+    '''
     try:
         data = request.json.get("products")
         if not isinstance(data, list):

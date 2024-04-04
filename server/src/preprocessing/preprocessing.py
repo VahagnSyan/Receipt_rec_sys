@@ -188,5 +188,4 @@ class Preprocessing:
             text = pytesseract.image_to_string(img, lang="Armenian+eng")
             return text
         except cv2.error as e:
-            print('Erooooooooooooooooooooooor', e)
             return ''
