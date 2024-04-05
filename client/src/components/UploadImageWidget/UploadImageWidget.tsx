@@ -4,9 +4,12 @@ import { getCurrentUserId } from "../../utils";
 
 interface IUploadImageWidget {
   scanReceipt: (id: string, image: File) => void;
-  setIsSubmited: (arg: boolean) => void
+  setIsSubmited: (arg: boolean) => void;
 }
-const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt , setIsSubmited}) => {
+const UploadImageWidget: FC<IUploadImageWidget> = ({
+  scanReceipt,
+  setIsSubmited,
+}) => {
   const [dragActive, setDragActive] = useState<boolean>(false);
   const inputRef = useRef<any>(null);
   const [files, setFiles] = useState<any>([]);
@@ -70,7 +73,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt , setIsSubmited
   }
 
   return (
-    <div className="w-full h-full bg-transparent rounded-xl">
+    <div className="w-full bg-transparent rounded-xl">
       <form
         className={`flex justify-center h-full px-[50px] border-[2px] border-dashed border-[#5b6068] rounded-[15px] ${
           dragActive && "bg-[#26262C]"
@@ -90,13 +93,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt , setIsSubmited
             multiple={true}
             onChange={handleChange}
             accept=".jpeg,.jpg,.png,.heic"
-            // @ts-ignore
-            webkitdirectory=""
-            // @ts-ignore
-            mozdirectory=""
-            // @ts-ignore
-            directory=""
-          />
+          />vs
           <img
             src={IMAGES.folderIcon}
             alt="folder"
@@ -120,9 +117,9 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt , setIsSubmited
             type="button"
             className="bg-[#4352F6] text-white text-[20px] font-semibold py-4 px-8 rounded-xl"
             onClick={() => {
-              scanReceipt(getCurrentUserId(), files)
-              setIsSubmited(true)
-            }} 
+              scanReceipt(getCurrentUserId(), files);
+              setIsSubmited(true);
+            }}
           >
             Submit
           </button>
@@ -132,7 +129,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({ scanReceipt , setIsSubmited
           <div className="flex flex-col items-center p-3">
             {files.map((file: any, idx: any) => (
               <div key={idx} className="flex flex-row space-x-5">
-                <span>{file.name}</span>
+                <span className="text-white">{file.name}</span>
                 <span
                   className="text-red-500 cursor-pointer"
                   onClick={() => removeFile(idx)}

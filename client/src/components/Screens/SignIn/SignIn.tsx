@@ -8,6 +8,7 @@ const SignIn = () => {
     await login(username, password).then((response) => {
       if (response.success) {
         navigate("/profile");
+        navigate(0);
       }
     });
   };

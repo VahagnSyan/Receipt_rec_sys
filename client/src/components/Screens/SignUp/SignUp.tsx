@@ -8,7 +8,8 @@ const SignUp = () => {
   const handleRegister = async (username: string, password: string) => {
     await register(username, password).then((response) => {
       if (response.success) {
-        navigate("/");
+        navigate("/sign-in");
+        navigate(0);
       }
     });
   };

@@ -35,17 +35,17 @@ def analytics():
     user = users_collection.find_one({"_id": object_id})
     if not user:
         return jsonify({"error": "User not found"}), 404
-    
+
     current_date = datetime.now()
     day = current_date.day
     month = current_date.month
     year = current_date.year
-    date = f'{day}/{month}/{year}'
+    date = f"{day}/{month}/{year}"
     purchases = user.get("purchases", [])
 
     result = []
     for element in purchases:
-        if difference(date, element.get('date')):
+        if difference(date, element.get("date")):
             result.append(element)
-    
+
     return jsonify({"purchases": result}), 200

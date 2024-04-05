@@ -38,7 +38,7 @@ const Profile = () => {
   }, [products]);
 
   return (
-    <div className="flex gap-[50px] w-full h-full">
+    <div className="flex gap-[50px] w-full min-h-[calc(100vh-200px)]">
       <Sidebar />
       {isLoading ? (
         <div className="flex w-full h-full items-center justify-center">
