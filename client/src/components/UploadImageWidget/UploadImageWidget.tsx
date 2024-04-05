@@ -124,7 +124,7 @@ const UploadImageWidget: FC<IUploadImageWidget> = ({
             Submit
           </button>
           <span className="text-gray-400 text-[14px]">
-            Supported Formats - png, jpg, gif, heic
+            Supported Formats - png, jpg
           </span>
           <div className="flex flex-col items-center p-3">
             {files.map((file: any, idx: any) => (
