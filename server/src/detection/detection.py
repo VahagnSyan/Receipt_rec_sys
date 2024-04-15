@@ -54,15 +54,16 @@ class Detection:
             month = current_date.month
             year = current_date.year
             date = f'{day}/{month}/{year}'
+            keywords = ['Դաս']
+            # keywords = ["Հատ", "Յ1ատ", "Յատ", "Վատ", 'Գատ', "գի", "կգ", "գր"]
             while index < len(info):
-                keywords = ["Հատ", "Յ1ատ", "Յատ", "Վատ", 'Գատ', "գի", "կգ", "գր"]
                 if any(keyword in info[index] for keyword in keywords):
                     product = {
                         'id': str(uuid.uuid4()),
-                        'name': self.find_name(info[index]),
+                        'name': self.find_name(info[index + 1]),
                         'price': (
-                            info[index + 1].split(" ")[-1]
-                            if info[index + 1].replace('.', '')
+                            info[index + 2].split(" ")[-1]
+                            if info[index + 2].replace('.', '')
                             else 0
                         ),
                         'category': '',
@@ -101,7 +102,9 @@ class Detection:
         """
         output_name = ''
         for char in name:
-            if char.isdigit() or char in '()<>':
+            # if char.isdigit() or char in '()<>':
+            #     break
+            if char in '()<>':
                 break
             output_name += char
         output_name = output_name.replace('կգ', '')
