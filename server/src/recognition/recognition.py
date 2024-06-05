@@ -12,7 +12,7 @@ Dependencies:
 
 
 from preprocessing.preprocessing import Preprocessing
-from preprocessing.post_processing import PostProcessing
+from postprocessing.post_processing import PostProcessing
 from detection.detection import Detection
 
 
