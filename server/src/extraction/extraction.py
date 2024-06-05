@@ -10,14 +10,14 @@ import uuid
 import datetime
 
 
-class Detection:
+class Extraction:
     """
-    Class for text detection and extraction.
+    Class for text extraction.
     """
 
     def __init__(self, data=''):
         """
-        Initialize the Detection object.
+        Initialize the Extraction object.
 
         Args:
             data (str): The input text data to be processed.
@@ -26,7 +26,7 @@ class Detection:
 
     def detect_text(self):
         """
-        Perform text detection and extraction.
+        Perform text extraction.
 
         This method processes the input text data
         to detect relevant information.
@@ -39,10 +39,10 @@ class Detection:
         """
         def filter_text(info) -> list:
             """
-            Filter the detected text to extract product information.
+            Filter the extracted text to extract product information.
 
             Args:
-                info (list): The detected text information.
+                info (list): The extracted text information.
 
             Returns:
                 list: A list of dictionaries containing the extracted product information.
