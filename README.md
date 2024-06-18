@@ -124,7 +124,4 @@
     │       └── utils.py
     └── tests
         └── __init__.py
-
-972 directories, 11207 files
-
 ```
