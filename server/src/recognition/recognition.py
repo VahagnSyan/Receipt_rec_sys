@@ -12,8 +12,8 @@ Dependencies:
 
 
 from preprocessing.preprocessing import Preprocessing
-from preprocessing.post_processing import PostProcessing
-from detection.detection import Detection
+from postprocessing.post_processing import PostProcessing
+from extraction.extraction import Extraction
 
 
 def receipt_recognition(image_path):
@@ -31,5 +31,5 @@ def receipt_recognition(image_path):
     """
     preprocess = Preprocessing(image_path)
     post = PostProcessing(preprocess.process_image())
-    data = Detection(post.post_process())
+    data = Extraction(post.post_process())
     return data.detect_text()
