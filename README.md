@@ -1,7 +1,9 @@
 # Receipt Recognition System
 
+
 ## Introduction
 The receipt recognition system is designed to accurately recognize and extract information from receipt images. This project separates the products on the receipts, allows each user to distinguish them by category and shows how much money he spent on which category by month.
+
 
 ## Installation
 To install the necessary dependencies, run the following commands:
@@ -13,15 +15,32 @@ poetry install
 npm install
 ```
 
+## Usage
+Follow these steps to run the Receipt Recognition System.
+1. Start the backend.
+```bash
+poetry run python3 server/src/main.py
+```
+2. In another terminal.
+```bash
+cd client
+npm run dev
+```
+3. Open your browser and go to:
+http://localhost:5173/
+
+Your Receipt Recognition System should now be up and running!
+
 ## Benchmarks
 
+These images are located in the `receipt-recognition-system/images` folder. The average recognition accuracy is 73%.
 
 | 2.jpg | 9.jpg | 12.jpg | 15.jpg | 50.jpg |
 | :-----| :-----| :-----| :-----| :-----|
 | 80%   | 76.4% | 91%   | 95%   | 97%   |
 
+- [More tested receipt images and results](https://drive.google.com/drive/folders/1Je9ydDAXDeL3wAAqWh6y9gSRAXtg896B?usp=sharing)
 
-- [More Tested receipts images and results](https://drive.google.com/drive/folders/1Je9ydDAXDeL3wAAqWh6y9gSRAXtg896B?usp=sharing)
 
 
 ## Folder structure
