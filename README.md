@@ -1,4 +1,18 @@
 # Receipt Recognition System
+
+## Introduction
+The receipt recognition system is designed to accurately recognize and extract information from receipt images. This project separates the products on the receipts, allows each user to distinguish them by category and shows how much money he spent on which category by month.
+
+## Installation
+To install the necessary dependencies, run the following commands:
+
+```bash
+git clone https://github.com/VahagnSyan/receipt-recognition-system.git
+cd receipt-recognition-system
+poetry install
+npm install
+```
+
 ## Benchmarks
 
 
